@@ -13,7 +13,12 @@ export default function MainSell() {
     .then(res => setBooks(res.items))
   }
  console.log(books)
- const display = books.map(e => <SellItem name={e.volumeInfo.title} author={e.volumeInfo.authors[0]} thumbnail={e.volumeInfo.imageLinks.thumbnail}/>)
+ const display = books.map(e => 
+ <SellItem 
+  name={e.volumeInfo.title} 
+  author={e.volumeInfo.authors[0]} 
+  thumbnail={e.volumeInfo.imageLinks.thumbnail}
+  />)
   
 
   return (   
@@ -24,7 +29,7 @@ export default function MainSell() {
         <img className=' h-5 ml-auto mr-2 self-center ' src="https://img.icons8.com/ios/50/search--v1.png" alt="search--v1" onClick={() => handleSearch()}/>
       </div>
     </div>
-    <div>
+    <div className='grid grid-cols-3 md:grid-cols-4 p-4 justify-items-center'>
         {display}
     </div>
  </div>
