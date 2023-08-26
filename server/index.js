@@ -23,10 +23,25 @@ app.post('/register', async (req, res) => {
             password: req.body.password,
             userStatus: req.body.userStatus
         })
-        const token = jwt.sign({userId: user._id}, 'dasjhkfsd')
+        const token = jwt.sign({userId: user._id, userStatus: user.userStatus}, 'dasjhkfsd')
         res.json(token)
     }catch(err){
         console.log(err)
+    }
+})
+
+app.post('/auth', async (req, res) => {
+    const {username, password} = req.body
+    const user = await User.findOne({username})
+    if(!user){
+        console.log('Error user not fountd')
+    }else{
+        if(user.password === password){
+            const token = jwt.sign({userId: user._id, userStatus: user.userStatus}, 'dasjhkfsd')
+            res.json(token)
+        }else{
+            console.log('Invalid password')
+        }
     }
 })
 
