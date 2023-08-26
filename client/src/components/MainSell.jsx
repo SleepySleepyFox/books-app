@@ -1,11 +1,17 @@
 import React, {useEffect, useState} from 'react'
 import SellItem from './SellItem';
+import Modal from './Modal';
 
 export default function MainSell() {
 
   const [search,setSearch] = useState("Хроники Заводной Птицы");
   const [books, setBooks] = useState([])
-  const [item, setItem] = useState()
+  const [item, setItem] = useState({})
+  const [active, setActive] = useState({
+    active: false,
+    author: '',
+    thumbnail: ''
+  })
 
   const handleSearch = () => {
     fetch(`https://www.googleapis.com/books/v1/volumes?q=${search.replace(/ /g, '_')}&key=AIzaSyDAmprmTeMEokjr6nusL66Y2GcUB0n5bGo`)
@@ -15,9 +21,10 @@ export default function MainSell() {
  console.log(books)
  const display = books.map(e => 
  <SellItem 
-  name={e.volumeInfo.title} 
-  author={e.volumeInfo.authors[0]} 
-  thumbnail={e.volumeInfo.imageLinks.thumbnail}
+  name={e.volumeInfo.title || 'No Name'} 
+  author={e.volumeInfo.authors[0] || "Unknown"} 
+  thumbnail={e.volumeInfo.imageLinks.thumbnail || "https://img.icons8.com/ios/50/question--v1.png"}
+  setActive={setActive}
   />)
   
 
@@ -32,6 +39,7 @@ export default function MainSell() {
     <div className='grid grid-cols-3 md:grid-cols-4 p-4 justify-items-center'>
         {display}
     </div>
+    {active.active && <Modal active={active} setActive={setActive}/>}
  </div>
   )
 }
