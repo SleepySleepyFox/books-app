@@ -10,6 +10,7 @@ export default function MainSell() {
   const [active, setActive] = useState({
     active: false,
     author: '',
+    name: '',
     thumbnail: ''
   })
 
