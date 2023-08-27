@@ -6,9 +6,11 @@ import MainBuy from './components/MainBuy'
 import MainSell from './components/MainSell'
 import Header from './components/Header'
 import LogIn from './components/LogIn'
+import Cart from './components/Cart'
 
 function App() {
   const [loggedin, setLoggedIn] = useState(null)
+  const [active, setActive] = useState(true)
   console.log("Token: ",loggedin)
 
   useEffect(() => {
@@ -26,11 +28,13 @@ function App() {
       <Routes>
         {loggedin != null ? <Route element={<Navigate to={'/'}/>} path='/auth'/> : <Route element={ <Navigate to={'/auth'}/>} path='/'/>} 
         {loggedin != null ? <Route element={<Navigate to={'/'}/>} path='/register'/> : <Route element={ <Navigate to={'/register'}/>} path='/'/>}
+        {active ? <Route element={<Navigate to={'/cart'}/>} path='/'/> : <Route element={ <Navigate to={'/'}/>} path='/cart'/>}
   
 
-      <Route element={<Main/>} path='/'/>
+      <Route element={<Main setActive={setActive}/>} path='/'/>
       {<Route element={<SignUp/>} path='/register'/>}
       <Route element={<LogIn/>} path='/auth'/> 
+      <Route element={<Cart setActive={setActive}/>} path='/cart'/>
       </Routes>
     </BrowserRouter>
   )

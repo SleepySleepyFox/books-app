@@ -1,6 +1,9 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 
-export default function Header() {
+export default function Header({status, setActive}) {
+  
+  console.log(status)
   return (
     <div className='w-full pt-2 px-4 h-7 flex items-center'>
 
@@ -16,6 +19,7 @@ export default function Header() {
 
 
         <h2 className='ml-auto'>UserName</h2>
+        {!status.userStatus && <Link to={'/cart'} onClick={() => setActive(true)}><img className='w-4 ml-2' src="https://img.icons8.com/pastel-glyph/64/shopping-cart--v2.png" alt="shopping-cart--v2"/></Link>}
     </div>
   )
 }

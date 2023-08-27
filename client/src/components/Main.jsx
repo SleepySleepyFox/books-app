@@ -4,7 +4,7 @@ import MainBuy from './MainBuy'
 import MainSell from './MainSell'
 import jwt_decode from "jwt-decode"
 
-export default function Main() {
+export default function Main({setActive}) {
     const [decoded, setDecoded] = useState({userStatus: null})
 
 useEffect(() => {
@@ -16,7 +16,7 @@ useEffect(() => {
 
   return (
     <div>
-        <Header/>
+        <Header status = {decoded} setActive={setActive}/>
         {decoded.userStatus === false && <MainBuy/>}
         {decoded.userStatus === true && <MainSell/>}
     </div>

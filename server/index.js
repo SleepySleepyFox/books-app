@@ -5,6 +5,7 @@ const jwt = require('jsonwebtoken')
 
 //Models
 const User = require('./models/User')
+const Book = require('./models/Book')
 
 const app = express()
 app.use(express.json())
@@ -45,4 +46,44 @@ app.post('/auth', async (req, res) => {
     }
 })
 
+// app.post('/sell', (res, req) => {
+//         console.log(req.body)
+//     Book.create({
+//         tumbnail: req.body.tumbnail,
+//         author: req.body.author,
+//         name: req.body.name,
+//         price: req.body.price
+//     }).then(data => res.send(data))
+// })
+
+app.get('/buyItems', (req, res) => {
+    const items = Book.find({})
+        .then(data => res.send(data))
+})
+
 const server = app.listen(4000)
+
+const io = require("socket.io")(server, {
+    cors: {
+        origin: "*"
+    }
+})
+
+io.on('connect', socket => {
+    socket.on("Data", data => {
+        // const book = new Book({
+        //     tumbnail: data.tumbnail,
+        //     author: data.author,
+        //     name: data.name,
+        //     price: data.price
+        // }).save().then(() => console.log('Book Added'))
+
+        Book.create({
+            tumbnail: data.tumbnail,
+            author: data.author,
+            name: data.name,
+            price: data.price
+        })
+    })
+})
+

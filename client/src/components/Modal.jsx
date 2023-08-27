@@ -1,3 +1,4 @@
+import axios from 'axios';
 import React, {useState} from 'react'
 import io from 'socket.io-client';
 
@@ -6,6 +7,14 @@ export default function Modal({active, setActive}) {
     const [price, setPrice] = useState()
 
     const handleDataSend = () => {
+        // axios.post('http://localhost:4000/sell', {
+        //     tumbnail: active.thumbnail,
+        //     author: active.author,
+        //     name: active.name,
+        //     price: price 
+        // })
+
+
         const socket = io.connect('http://localhost:4000')
         socket.emit("Data", {
             tumbnail: active.thumbnail,
