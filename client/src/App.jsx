@@ -10,7 +10,7 @@ import Cart from './components/Cart'
 
 function App() {
   const [loggedin, setLoggedIn] = useState(null)
-  const [active, setActive] = useState(true)
+  const [active, setActive] = useState(false)
   console.log("Token: ",loggedin)
 
   useEffect(() => {

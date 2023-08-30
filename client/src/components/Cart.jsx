@@ -1,10 +1,15 @@
 import React, { useEffect, useState } from 'react'
 import BuyItem from './BuyItem'
 import Cartitem from './CartItem'
+import axios from 'axios'
 
 export default function Cart({setActive}) {
-const [cart, setCart] = useState(JSON.parse(localStorage.getItem('cart')))
+const [cart, setCart] = useState([])
 console.log('cart: ', cart)
+
+useState(() => {
+    setCart(JSON.parse(localStorage.getItem('cart')))
+}, [localStorage.getItem('cart')])
 
 const display = cart.map(e => <div className=''>
     <Cartitem 
@@ -12,6 +17,7 @@ const display = cart.map(e => <div className=''>
     name={e.name}
     author={e.author}
     price={e.price}
+    userid={e.userid}
     />
 </div> )
 
@@ -20,7 +26,7 @@ const display = cart.map(e => <div className=''>
     <div className='top-0 left-0 h-full fixed w-screen bg-slate-100' >
        <div className='p-1 font-bold' onClick={() => setActive(false)}>X</div>
        {display}
-       <button className='bg-slate-400 px-10'>Buy All</button>
+       {cart.length != 0 && <button className='bg-slate-400 px-10' onClick={() => {BuyItems()}}>Buy All</button>}
     </div>
   )
 }

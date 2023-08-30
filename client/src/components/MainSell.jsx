@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react'
 import SellItem from './SellItem';
 import Modal from './Modal';
 
-export default function MainSell() {
+export default function MainSell({userID}) {
 
   const [search,setSearch] = useState("Хроники Заводной Птицы");
   const [books, setBooks] = useState([])
@@ -26,6 +26,7 @@ export default function MainSell() {
   author={e.volumeInfo.authors[0] || "Unknown"} 
   thumbnail={e.volumeInfo.imageLinks.thumbnail || "https://img.icons8.com/ios/50/question--v1.png"}
   setActive={setActive}
+  userID={userID}
   />)
   
 
@@ -34,7 +35,7 @@ export default function MainSell() {
      <div className='p-4 flex flex-col items-center'>
       <div className='flex justify-center border-black border-2 w-full md:w-[40%] rounded-md'>
         <input className='rounded-md w-full outline-none' type="text" name="" id="" onChange={(e) => setSearch(e.target.value)} />
-        <img className=' h-5 ml-auto mr-2 self-center ' src="https://img.icons8.com/ios/50/search--v1.png" alt="search--v1" onClick={() => handleSearch()}/>
+        <img className='h-5 ml-auto mr-2 self-center ' src="https://img.icons8.com/ios/50/search--v1.png" alt="search--v1" onClick={() => handleSearch()}/>
       </div>
     </div>
     <div className='grid grid-cols-3 md:grid-cols-4 p-4 justify-items-center'>

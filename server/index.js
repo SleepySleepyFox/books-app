@@ -2,10 +2,12 @@ const express = require('express')
 const mongoose = require('mongoose')
 const cors = require('cors')
 const jwt = require('jsonwebtoken')
+const WebSocketServer = require('ws') 
 
 //Models
 const User = require('./models/User')
 const Book = require('./models/Book')
+const { Server } = require('socket.io')
 
 const app = express()
 app.use(express.json())
@@ -46,16 +48,6 @@ app.post('/auth', async (req, res) => {
     }
 })
 
-// app.post('/sell', (res, req) => {
-//         console.log(req.body)
-//     Book.create({
-//         tumbnail: req.body.tumbnail,
-//         author: req.body.author,
-//         name: req.body.name,
-//         price: req.body.price
-//     }).then(data => res.send(data))
-// })
-
 app.get('/buyItems', (req, res) => {
     const items = Book.find({})
         .then(data => res.send(data))
@@ -71,19 +63,19 @@ const io = require("socket.io")(server, {
 
 io.on('connect', socket => {
     socket.on("Data", data => {
-        // const book = new Book({
-        //     tumbnail: data.tumbnail,
-        //     author: data.author,
-        //     name: data.name,
-        //     price: data.price
-        // }).save().then(() => console.log('Book Added'))
-
         Book.create({
             tumbnail: data.tumbnail,
             author: data.author,
             name: data.name,
-            price: data.price
+            price: data.price,
+            userid: data.userId
         })
+    })
+
+    const BookConnection = Book.watch()
+
+    BookConnection.on('change', data => {
+        socket.emit('Books', data)
     })
 })
 

@@ -20,7 +20,8 @@ export default function Modal({active, setActive}) {
             tumbnail: active.thumbnail,
             author: active.author,
             name: active.name,
-            price: price
+            price: price,
+            userId: active.userID
         })
     }
   return (

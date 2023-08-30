@@ -18,7 +18,7 @@ useEffect(() => {
     <div>
         <Header status = {decoded} setActive={setActive}/>
         {decoded.userStatus === false && <MainBuy/>}
-        {decoded.userStatus === true && <MainSell/>}
+        {decoded.userStatus === true && <MainSell userID={decoded.userId}/>}
     </div>
   )
 }
