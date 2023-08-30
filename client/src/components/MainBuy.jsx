@@ -3,16 +3,15 @@ import BuyItem from './BuyItem'
 import io from 'socket.io-client';
 import axios from "axios"
 import Cart from './Cart';
-import { WebSocketServer } from "ws";
 
 
 export default function MainBuy() {
   const [items, setItems] = useState([])
   const [cart, setCart] = useState([])
 
-  const socket = new WebSocket("ws://localhost:4000");
+  const socket = io.connect('http://localhost:4000')
 
-  socket.addEventListener('Books', data => console.log(data))
+  socket.on("Book", data => console.log(data))
 
   useEffect(() => {
     localStorage.setItem('cart', JSON.stringify(cart))

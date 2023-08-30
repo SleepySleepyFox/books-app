@@ -20,14 +20,25 @@ export default function MainSell({userID}) {
     .then(res => setBooks(res.items))
   }
  console.log(books)
- const display = books.map(e => 
- <SellItem 
-  name={e.volumeInfo.title || 'No Name'} 
-  author={e.volumeInfo.authors[0] || "Unknown"} 
-  thumbnail={e.volumeInfo.imageLinks.thumbnail || "https://img.icons8.com/ios/50/question--v1.png"}
-  setActive={setActive}
-  userID={userID}
-  />)
+ const display = books.map(e => {
+  if(e.volumeInfo.imageLinks != undefined){
+    return(<SellItem 
+      name={e.volumeInfo.title || 'No Name'} 
+      author={e.volumeInfo.authors[0] || "Unknown"} 
+      thumbnail={e.volumeInfo.imageLinks.thumbnail}
+      setActive={setActive}
+      userID={userID}
+      />)
+  }else{
+    return( <SellItem 
+      name={e.volumeInfo.title || 'No Name'} 
+      author={e.volumeInfo.authors[0] || "Unknown"} 
+      thumbnail={"https://img.icons8.com/ios/50/no-image.png"}
+      setActive={setActive}
+      userID={userID}
+      />)
+  }
+ })
   
 
   return (   
