@@ -8,6 +8,6 @@ const Book = new mongoose.Schema({
     userid: {type: String, required: true},
 })
 
-const model = mongoose.model("Book", Book)
+const model = mongoose.model("books", Book)
 
 module.exports = model

@@ -2,20 +2,21 @@ const express = require('express')
 const mongoose = require('mongoose')
 const cors = require('cors')
 const jwt = require('jsonwebtoken')
+const { Server } = require("socket.io");
+require('dotenv').config()
 
 //Models
 const User = require('./models/User')
 const Book = require('./models/Book')
-const { Server } = require('socket.io')
 
 const app = express()
 app.use(express.json())
 app.use(cors()) 
 
-mongoose.connect(`mongodb://127.0.0.1:27017/books-app`)
-    .then(() => {
-        console.log('connected to mongoDB')
-    })
+mongoose.connect(`mongodb+srv://admin:${process.env.KEY}@cluster0.och0jtq.mongodb.net/books-app`)
+.then(() => {
+    console.log('connected to mongoDB')
+})
 
 
 app.post('/register', async (req, res) => {    
@@ -47,10 +48,26 @@ app.post('/auth', async (req, res) => {
     }
 })
 
+app.post('/sell', async (req, res) => {
+     try{
+        const book = await Book.create({
+            tumbnail: req.body.tumbnail,
+            author: req.body.author,
+            name: req.body.name,
+            price: req.body.price,
+            userid: req.body.userId
+        })
+     }catch(err){
+        console.log('Error: ', err)
+     }
+})
+
 app.get('/buyItems', (req, res) => {
     const items = Book.find({})
         .then(data => res.send(data))
 })
+
+
 
 const server = app.listen(4000)
 
@@ -60,21 +77,11 @@ const io = require("socket.io")(server, {
     }
 })
 
-io.on('connect', socket => {
-    socket.on("Data", data => {
-        Book.create({
-            tumbnail: data.tumbnail,
-            author: data.author,
-            name: data.name,
-            price: data.price,
-            userid: data.userId
-        })
-    })
-
-    const BookConnection = Book.watch()
-
-    BookConnection.on('change', data => {
-        socket.emit('Books', data)
+io.on("connection", (socket) => {
+    console.log('connected to sockets.io')
+    Book.watch()
+        .on('change', data => {
+        socket.emit("Data", data)
     })
 })
 

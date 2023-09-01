@@ -11,15 +11,22 @@ export default function MainBuy() {
 
   const socket = io.connect('http://localhost:4000')
 
-  socket.on("Book", data => console.log(data))
 
   useEffect(() => {
     localStorage.setItem('cart', JSON.stringify(cart))
+
+    socket.on("Data", data => {
+      setItems(e => [...e, data.fullDocument])
+    })
   }, [cart])
 
   useEffect(() => {
     axios.get('http://localhost:4000/buyItems')
       .then(res => setItems(res.data))
+
+      socket.on("Data", data =>{
+        console.log(data)
+      })
   }, [])
 
   const display = items.map(e => <BuyItem

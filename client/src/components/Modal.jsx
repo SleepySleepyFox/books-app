@@ -6,23 +6,24 @@ export default function Modal({active, setActive}) {
 
     const [price, setPrice] = useState()
 
-    const handleDataSend = () => {
-        // axios.post('http://localhost:4000/sell', {
-        //     tumbnail: active.thumbnail,
-        //     author: active.author,
-        //     name: active.name,
-        //     price: price 
-        // })
-
-
-        const socket = io.connect('http://localhost:4000')
-        socket.emit("Data", {
+    const handleDataSend = async () => {
+        await axios.post('http://localhost:4000/sell', {
             tumbnail: active.thumbnail,
             author: active.author,
             name: active.name,
             price: price,
             userId: active.userID
         })
+
+
+        // const socket = io.connect('http://localhost:4000')
+        // socket.emit("Data", {
+        //     tumbnail: active.thumbnail,
+        //     author: active.author,
+        //     name: active.name,
+        //     price: price,
+        //     userId: active.userID
+        // })
     }
   return (
     <div 
