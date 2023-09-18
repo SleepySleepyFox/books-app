@@ -7,21 +7,17 @@ import MainSell from './components/MainSell'
 import Header from './components/Header'
 import LogIn from './components/LogIn'
 import Cart from './components/Cart'
+import Messages from './components/Messages'
 
 function App() {
   const [loggedin, setLoggedIn] = useState(null)
   const [active, setActive] = useState(false)
-  console.log("Token: ",loggedin)
 
+  console.log("Token: ",loggedin)
   useEffect(() => {
     setLoggedIn(localStorage.getItem('token'))
   }, [localStorage.getItem('token')])
 
-  // setLoggedIn(null)
-
-  // <div className=''>
-  //     <SignUp/>
-  //   </div>
 
   return (
     <BrowserRouter>
@@ -29,15 +25,15 @@ function App() {
         {loggedin != null ? <Route element={<Navigate to={'/'}/>} path='/auth'/> : <Route element={ <Navigate to={'/auth'}/>} path='/'/>} 
         {loggedin != null ? <Route element={<Navigate to={'/'}/>} path='/register'/> : <Route element={ <Navigate to={'/register'}/>} path='/'/>}
         {active ? <Route element={<Navigate to={'/cart'}/>} path='/'/> : <Route element={ <Navigate to={'/'}/>} path='/cart'/>}
-  
-
-      <Route element={<Main setActive={setActive}/>} path='/'/>
-      {<Route element={<SignUp/>} path='/register'/>}
-      <Route element={<LogIn/>} path='/auth'/> 
-      <Route element={<Cart setActive={setActive}/>} path='/cart'/>
+        <Route element={<Main setActive={setActive}/>} path='/'/>
+        {<Route element={<SignUp/>} path='/register'/>}
+        <Route element={<LogIn/>} path='/auth'/> 
+        <Route element={<Cart setActive={setActive}/>} path='/cart'/>
+        <Route element={<Messages/>} path='/messages'/>
       </Routes>
     </BrowserRouter>
   )
 }
+
 
 export default App

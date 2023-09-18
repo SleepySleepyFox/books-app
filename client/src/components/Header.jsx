@@ -18,8 +18,12 @@ export default function Header({status, setActive}) {
         }}>X</div>
 
 
-        <h2 className='ml-auto'>UserName</h2>
-        {!status.userStatus && <Link to={'/cart'} onClick={() => setActive(true)}><img className='w-4 ml-2' src="https://img.icons8.com/pastel-glyph/64/shopping-cart--v2.png" alt="shopping-cart--v2"/></Link>}
+       <div className='ml-auto flex items-center'> 
+       <p>{status.username}</p>
+        {!status.userStatus ? <Link to={'/cart'} onClick={() => setActive(true)}><img className='w-4 h-4 ml-2' src="https://img.icons8.com/pastel-glyph/64/shopping-cart--v2.png" alt="shopping-cart--v2"/></Link> :
+        <Link to={'/messages'}><img className='w-4 h-4 ml-2' src="https://img.icons8.com/ios/50/filled-message.png" alt="secured-letter--v1"/></Link>}
+       </div>
+        
     </div>
   )
 }
