@@ -41,7 +41,7 @@ export default function MainBuy() {
     /> )
 
   return (
-    <div className='grid grid-cols-3 md:grid-cols-4 p-4 justify-items-center'>
+    <div className='grid grid-cols-3 md:grid-cols-6 p-4 justify-items-center'>
       {display}
       
     </div>

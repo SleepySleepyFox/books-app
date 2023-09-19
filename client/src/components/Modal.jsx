@@ -14,7 +14,7 @@ export default function Modal({active, setActive}) {
             price: price,
             userId: active.userID
         })
-
+        
 
         // const socket = io.connect('http://localhost:4000')
         // socket.emit("Data", {
@@ -27,7 +27,7 @@ export default function Modal({active, setActive}) {
     }
   return (
     <div 
-    className='top-0 h-full fixed w-screen' >
+    className={`top-0 h-full fixed w-screen`}>
         <div className='h-full flex justify-center items-center'>
             <div className='bg-slate-100 w-fit px-12 p-2 rounded-md'>
                 <div onClick={() => setActive(e => !e)} className=' w-fit font-bold cursor-default opacity-70 hover:opacity-100 hover:ease-out hover:text-red-600 duration-300'>X</div>
