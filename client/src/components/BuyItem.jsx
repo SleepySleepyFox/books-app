@@ -3,6 +3,16 @@ import React, {useEffect, useState} from 'react'
 export default function BuyItem({tumbnail, author, name, price, setCart, cart, userid}) {
   const [count, setCount] = useState(1)
   const [overallPrice, setOverallPrice] = useState()
+
+  const handelAddToCart = (tumbnail, author, name, price, userid) => {
+    setCart(e => [...e, {tumbnail, author, name, price, userid}])
+    const allItems = JSON.parse(localStorage.getItem('cart'))
+    // console.log('all items:',allItems)
+    allItems.push({tumbnail, author, name, price, userid})
+    localStorage.removeItem('cart')
+    localStorage.setItem('cart',JSON.stringify(allItems))
+
+  }
   
   useEffect(() => {
     setOverallPrice(Number(price) * count)
@@ -18,7 +28,9 @@ export default function BuyItem({tumbnail, author, name, price, setCart, cart, u
           {count}
           <div className='cursor-default' onClick={() => setCount(e => e + 1)}>+</div>
         </div>
-        <button className='w-full self-center rounded-md bg-slate-300 hover:bg-slate-400 ease-in duration-300 align-bottom' onClick={(e) => setCart(e => [...e, {tumbnail, author, name, price: overallPrice, userid}])}>Add to cart</button>
+        <button className='w-full self-center rounded-md bg-slate-300 hover:bg-slate-400 ease-in duration-300 align-bottom' onClick={(e) => handelAddToCart(tumbnail, author, name, overallPrice, cart, userid)}>Add to cart</button>
     </div>
   )
 }
+
+//{tumbnail, author, name, price: overallPrice, userid}

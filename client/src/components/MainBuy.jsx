@@ -10,10 +10,10 @@ export default function MainBuy() {
   const [cart, setCart] = useState([])
 
   const socket = io.connect('http://localhost:4000')
-
+  // localStorage.removeItem('cart')
 
   useEffect(() => {
-    localStorage.setItem('cart', JSON.stringify(cart))
+    // localStorage.setItem('cart', JSON.stringify([]))
 
     socket.on("Data", data => {
       setItems(e => [...e, data.fullDocument])

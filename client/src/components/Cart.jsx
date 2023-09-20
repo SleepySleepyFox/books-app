@@ -8,8 +8,13 @@ const [cart, setCart] = useState([])
 console.log('cart: ', cart)
 
 useState(() => {
-    setCart(JSON.parse(localStorage.getItem('cart')))
+  JSON.parse(localStorage.getItem('cart')) != null && setCart(JSON.parse(localStorage.getItem('cart')))
 }, [localStorage.getItem('cart')])
+
+
+const BuyItems = () => {
+  localStorage.setItem('cart', JSON.stringify([]))
+}
 
 const display = cart.map(e => <div className=''>
     <Cartitem 
@@ -21,8 +26,7 @@ const display = cart.map(e => <div className=''>
     />
 </div> )
 
-  return (
-    
+  return ( 
     <div className='top-0 left-0 h-full fixed w-screen bg-slate-100' >
        <div className='p-1 font-bold' onClick={() => setActive(false)}>X</div>
        {display}
