@@ -21,23 +21,13 @@ export default function MainSell({userID}) {
   }
  console.log(books)
  const display = books.map(e => {
-  if(e.volumeInfo.imageLinks != undefined){
     return(<SellItem 
-      name={e.volumeInfo.title || 'No Name'} 
-      author={e.volumeInfo.authors[0] || "Unknown"} 
-      thumbnail={e.volumeInfo.imageLinks.thumbnail}
+      name={e.volumeInfo.title} 
+      author={e.volumeInfo.authors != undefined ? e.volumeInfo.authors[0] : ["Unknown"]} 
+      thumbnail={e.volumeInfo.imageLinks != undefined ? e.volumeInfo.imageLinks.thumbnail : "https://img.icons8.com/ios/50/no-image.png"}
       setActive={setActive}
       userID={userID}
       />)
-  }else{
-    return( <SellItem 
-      name={e.volumeInfo.title || 'No Name'} 
-      author={e.volumeInfo.authors[0] || "Unknown"} 
-      thumbnail={"https://img.icons8.com/ios/50/no-image.png"}
-      setActive={setActive}
-      userID={userID}
-      />)
-  }
  })
   
 
