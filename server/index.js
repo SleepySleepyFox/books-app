@@ -8,6 +8,7 @@ require('dotenv').config()
 //Models
 const User = require('./models/User')
 const Book = require('./models/Book')
+const Buy = require('./models/Buy')
 
 const app = express()
 app.use(express.json())
@@ -62,9 +63,34 @@ app.post('/sell', async (req, res) => {
      }
 })
 
+app.post('/orders', (req,res) => {
+    Buy.find({seller: req.body.userID})
+        .then(data => res.send(data))
+})
+
 app.get('/buyItems', (req, res) => {
     const items = Book.find({})
         .then(data => res.send(data))
+})
+
+//Cart
+app.post("/BuyAll", (req,res) => {
+    const request = req.body.cart
+    console.log(request)
+    try{
+        request.map(e => {
+            Buy.create({
+                book: e.name,
+                author: e.author,
+                amount: e.count,
+                price: e.price,
+                buyer: e.buyerId,
+                seller: e.userid
+            })
+        })
+    }catch(err){
+        console.log('error')
+    }
 })
 
 
@@ -83,5 +109,12 @@ io.on("connection", (socket) => {
         .on('change', data => {
         socket.emit("Data", data)
     })
+
+    Buy.watch()
+        .on('init', data => {
+            socket.emit("BuyData", 'Works')
+        })
+
+    
 })
 

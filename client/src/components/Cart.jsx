@@ -5,7 +5,6 @@ import axios from 'axios'
 
 export default function Cart({setActive}) {
 const [cart, setCart] = useState([])
-console.log('cart: ', cart)
 
 useState(() => {
   JSON.parse(localStorage.getItem('cart')) != null && setCart(JSON.parse(localStorage.getItem('cart')))
@@ -14,6 +13,7 @@ useState(() => {
 
 const BuyItems = () => {
   localStorage.setItem('cart', JSON.stringify([]))
+  axios.post("http://localhost:4000/BuyAll", {cart})
 }
 
 const display = cart.map(e => <div className=''>

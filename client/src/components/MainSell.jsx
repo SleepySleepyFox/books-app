@@ -1,6 +1,8 @@
 import React, {useEffect, useState} from 'react'
 import SellItem from './SellItem';
 import Modal from './Modal';
+import { io } from 'socket.io-client';
+import axios from 'axios';
 
 export default function MainSell({userID}) {
 
@@ -12,6 +14,13 @@ export default function MainSell({userID}) {
     author: '',
     name: '',
     thumbnail: ''
+  })
+  const [orders, setOrders] = useState([])
+
+  const socket = io.connect('http://localhost:4000')
+
+  socket.on("BuyData", data => {
+    console.log('BuyData:', data)
   })
 
   const handleSearch = () => {

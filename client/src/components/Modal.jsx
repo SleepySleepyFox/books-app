@@ -14,16 +14,6 @@ export default function Modal({active, setActive}) {
             price: price,
             userId: active.userID
         })
-        
-
-        // const socket = io.connect('http://localhost:4000')
-        // socket.emit("Data", {
-        //     tumbnail: active.thumbnail,
-        //     author: active.author,
-        //     name: active.name,
-        //     price: price,
-        //     userId: active.userID
-        // })
     }
   return (
     <div 

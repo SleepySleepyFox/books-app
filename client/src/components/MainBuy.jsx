@@ -5,12 +5,13 @@ import axios from "axios"
 import Cart from './Cart';
 
 
-export default function MainBuy() {
+export default function MainBuy({BuyerID, BuyerName}) {
   const [items, setItems] = useState([])
   const [cart, setCart] = useState([])
 
+  console.log('id', BuyerID)
+
   const socket = io.connect('http://localhost:4000')
-  // localStorage.removeItem('cart')
 
   useEffect(() => {
     // localStorage.setItem('cart', JSON.stringify([]))
@@ -38,6 +39,8 @@ export default function MainBuy() {
     setCart={setCart}
     cart={cart}
     userid={e.userid}
+    BuyerID={BuyerID}
+    BuyerName={BuyerName}
     /> )
 
   return (
