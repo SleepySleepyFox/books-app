@@ -13,11 +13,13 @@ export default function Messages({}) {
       .then(data => setOrders(data.data))
   }, [])
 
-  console.log(orders)
+  const handleOrder = (order_id) => {
+    axios.post('http://localhost:4000/handleOrder', {id: order_id})
+  }
 
   const display = orders.map(e => {
     return(
-      <div className='flex text-start justify-between px-4'>
+      <div className='flex text-start justify-between items-center px-4'>
         <div className='w-36'>
           <h1>{e.author}</h1>
           <p>{e.book}</p>
@@ -28,7 +30,8 @@ export default function Messages({}) {
         <div className='w-12 text-start'>
           {e.buyer}
         </div>
-        <div>OK</div>
+        <div onClick={() => {handleOrder(e._id)}}>OK</div>
+        {/* <div>{e._id}</div> */}
       </div>
     )
   })

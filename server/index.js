@@ -68,6 +68,10 @@ app.post('/orders', (req,res) => {
         .then(data => res.send(data))
 })
 
+app.post('/handleOrder', async (req,res) => {
+    await Buy.deleteOne({_id: req.body.id})
+})
+
 app.get('/buyItems', (req, res) => {
     const items = Book.find({})
         .then(data => res.send(data))
